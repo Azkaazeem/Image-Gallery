@@ -1,4 +1,4 @@
-import supaBase from "./config.js";
+import supabase from "./config.js";
 
 //  pasword toggle button for both sign up and login page 
 
@@ -42,8 +42,8 @@ async function signUp(e) {
       text: "Please fill all fields before signup.",
       icon: "warning",
       background: "#f9fbfc",
-      color: "#003b46",
-      confirmButtonColor: "#003b46",
+      color: "#45a049",
+      confirmButtonColor: "#45a049",
       confirmButtonText: "OK",
       padding: "20px",
       borderRadius: "15px",
@@ -61,8 +61,8 @@ async function signUp(e) {
       text: "Phone number must be exactly 11 digits.",
       icon: "warning",
       background: "#f9fbfc",
-      color: "#003b46",
-      confirmButtonColor: "#003b46",
+      color: "#45a049",
+      confirmButtonColor: "#45a049",
       confirmButtonText: "Try Again",
       customClass: {
         popup: "glass-alert"
@@ -75,7 +75,7 @@ async function signUp(e) {
   }
 
   try {
-    const { data, error } = await supaBase.auth.signUp(
+    const { data, error } = await supabase.auth.signUp(
       {
         email: sEmail.value,
         password: sPass.value,
@@ -95,8 +95,8 @@ async function signUp(e) {
         icon: "error",
         draggable: true,
         background: "#f9fbfc",
-        color: "#003b46",
-        confirmButtonColor: "#003b46",
+        color: "#45a049",
+        confirmButtonColor: "#45a049",
         confirmButtonText: "OK",
         padding: "20px",
         borderRadius: "15px",
@@ -115,8 +115,8 @@ async function signUp(e) {
 
     // --- STEP 2: Admin Table ('profiles') mein data bhejo ---
     // (Ye Naya Code Hai Jo Zaroori Hai)
-    const { error: dbError } = await supaBase
-      .from('Profiles') // Table ka naam
+    const { error: dbError } = await supabase
+      .from('Users') // Table ka naam
       .insert({
         username: sUName.value,
         email: sEmail.value,
@@ -131,8 +131,8 @@ async function signUp(e) {
         title: "Database Error!",
         text: dbError.message,
         icon: "error",
-        color: "#003b46",
-        confirmButtonColor: "#003b46",
+        color: "#45a049",
+        confirmButtonColor: "#45a049",
         confirmButtonText: "OK",
         padding: "20px",
         borderRadius: "15px",
@@ -145,8 +145,8 @@ async function signUp(e) {
         icon: "success",
         draggable: true,
         background: "#f9fbfc",
-        color: "#003b46",
-        confirmButtonColor: "#003b46",
+        color: "#45a049",
+        confirmButtonColor: "#45a049",
         confirmButtonText: "Go to Home",
         padding: "20px",
         borderRadius: "15px",
@@ -156,7 +156,7 @@ async function signUp(e) {
 
       })
         .then(() => {
-          location.href = "/crud/ecom-home.html"
+          location.href = "home.html"
         })
     }
   } catch (err) {
@@ -166,8 +166,8 @@ async function signUp(e) {
       html: `Something went wrong internally! <br></br> <b>${err.message || "Unknown error"}</b>`,
       icon: "error",
       background: "#f9fbfc",
-      color: "#003b46",
-      confirmButtonColor: "#003b46",
+      color: "#45a049",
+      confirmButtonColor: "#45a049",
       confirmButtonText: "Report issue",
       padding: "20px",
       borderRadius: "15px",
@@ -200,8 +200,8 @@ async function login(e) {
       title: "Please enter your email address.",
       icon: "warning",
       background: "#f9fbfc",
-      color: "#003b46",
-      confirmButtonColor: "#003b46",
+      color: "#45a049",
+      confirmButtonColor: "#45a049",
       confirmButtonText: "OK",
       padding: "20px",
       borderRadius: "15px",
@@ -217,8 +217,8 @@ async function login(e) {
       text: "Example: yourname@gmail.com",
       icon: "warning",
       background: "#f9fbfc",
-      color: "#003b46",
-      confirmButtonColor: "#003b46",
+      color: "#45a049",
+      confirmButtonColor: "#45a049",
       confirmButtonText: "OK",
       padding: "20px",
       borderRadius: "15px",
@@ -237,8 +237,8 @@ async function login(e) {
       text: "Please enter your password.",
       icon: "warning",
       background: "#f9fbfc",
-      color: "#003b46",
-      confirmButtonColor: "#003b46",
+      color: "#45a049",
+      confirmButtonColor: "#45a049",
       confirmButtonText: "OK",
       padding: "20px",
       borderRadius: "15px",
@@ -254,8 +254,8 @@ async function login(e) {
       text: "Password must be at least 6 characters long.",
       icon: "warning",
       background: "#f9fbfc",
-      color: "#003b46",
-      confirmButtonColor: "#003b46",
+      color: "#45a049",
+      confirmButtonColor: "#45a049",
       confirmButtonText: "OK",
       padding: "20px",
       borderRadius: "15px",
@@ -272,8 +272,8 @@ async function login(e) {
       title: "Admin logged in Successfully!",
       icon: "success",
       background: "#f9fbfc",
-      color: "#003b46",
-      confirmButtonColor: "#003b46",
+      color: "#45a049",
+      confirmButtonColor: "#45a049",
       confirmButtonText: "Go to Admin portal..",
       padding: "20px",
       borderRadius: "15px",
@@ -287,7 +287,7 @@ async function login(e) {
   }
 
   try {
-    const { data, error } = await supaBase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: pass
     });
@@ -299,8 +299,8 @@ async function login(e) {
           text: "Incorrect Email or Password. Please try again.",
           icon: "error",
           background: "#f9fbfc",
-          color: "#003b46",
-          confirmButtonColor: "#003b46",
+          color: "#45a049",
+          confirmButtonColor: "#45a049",
           confirmButtonText: "Try Again!",
           padding: "20px",
           customClass: {
@@ -317,8 +317,8 @@ async function login(e) {
           text: error.message,
           icon: "error",
           background: "#f9fbfc",
-          color: "#003b46",
-          confirmButtonColor: "#003b46",
+          color: "#45a049",
+          confirmButtonColor: "#45a049",
           confirmButtonText: "Try Again!",
           padding: "20px",
           customClass: {
@@ -335,15 +335,15 @@ async function login(e) {
       title: "Successfully logged in!",
       icon: "success",
       background: "#f9fbfc",
-      color: "#003b46",
-      confirmButtonColor: "#003b46",
+      color: "#45a049",
+      confirmButtonColor: "#45a049",
       confirmButtonText: "Go to Home",
       padding: "20px",
       customClass: {
         popup: "glass-alert"
       }
     }).then(() => {
-      location.href = "/crud/ecom-home.html";
+      location.href = "home.html";
     });
 
   } catch (err) {
@@ -353,8 +353,8 @@ async function login(e) {
       html: `Something went wrong internally!<br></br> <b> ${(err.message) || "Unknown error"}</b>`,
       icon: "error",
       background: "#f9fbfc",
-      color: "#003b46",
-      confirmButtonColor: "#003b46",
+      color: "#45a049",
+      confirmButtonColor: "#45a049",
       confirmButtonText: "Report issue",
       padding: "20px",
       borderRadius: "15px",
@@ -376,14 +376,14 @@ let logoutBtn = document.getElementById("logout-btn")
 console.log(logoutBtn);
 async function logout() {
   try {
-    const { error } = await supaBase.auth.signOut()
+    const { error } = await supabase.auth.signOut()
     if (!error) {
       Swal.fire({
         title: "Successfully logged out!",
         icon: "success",
         background: "#f9fbfc",
-        color: "#003b46",
-        confirmButtonColor: "#003b46",
+        color: "#45a049",
+        confirmButtonColor: "#45a049",
         confirmButtonText: "Go to Login page",
         padding: "20px",
       }).then(() => {
@@ -395,3 +395,22 @@ async function logout() {
   }
 }
 logoutBtn && logoutBtn.addEventListener("click", logout)               
+
+// MOOD CHANGER
+
+// MODE TOGGLE BUTTON
+const modeBtn = document.querySelector(".mode-toggle");
+const modeIcon = document.getElementById("modeIcon");
+
+modeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+
+    // icon change
+    if (document.body.classList.contains("dark-mode")) {
+        modeIcon.classList.remove("fa-moon");
+        modeIcon.classList.add("fa-sun");
+    } else {
+        modeIcon.classList.remove("fa-sun");
+        modeIcon.classList.add("fa-moon");
+    }
+});

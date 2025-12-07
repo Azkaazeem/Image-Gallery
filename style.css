@@ -1,3 +1,145 @@
+/* ======================================================     MOOD TOGGLE BUTTON STYLING     ======================================================      */
+
+.mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #f1f1f1;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 3px 12px rgba(0,0,0,0.15);
+    transition: 0.35s ease;
+    z-index: 1000;
+}
+
+.mode-toggle:hover {
+    transform: scale(1.07);
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+}
+
+.mode-toggle i {
+    font-size: 20px;
+    color: #333;
+    transition: 0.4s ease;
+    transform-origin: center;
+}
+
+/* Dark Mode Animation */
+.dark-mode .mode-toggle {
+    background: #2d2d2d;
+}
+
+.dark-mode .mode-toggle:hover {
+    box-shadow: 0px 5px 15px rgba(255,255,255,0.15);
+}
+
+.dark-mode .mode-toggle i {
+    color: #fff;
+}
+
+/* Page Dark Mode */
+.dark-mode {
+    background-color: #1a1a1a;
+    color: #fff;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+.dark-mode .left-section {
+    background-color: #1f1f1f;
+    transition: 0.4s ease;
+}
+
+.dark-mode input {
+    transition: 0.4s ease;
+}
+
+
+
+
+
+/* MODE TOGGLE BUTTON */
+.mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #f1f1f1;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+    transition: 0.35s ease;
+    z-index: 1000;
+}
+
+.mode-toggle:hover {
+    background: #e5e5e5;
+}
+
+.mode-toggle i {
+    font-size: 20px;
+    color: #333;
+    transition: 0.3s;
+}
+
+/* DARK MODE STYLES */
+.dark-mode {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+.dark-mode .left-section {
+    background-color: #1f1f1f;
+}
+
+.dark-mode h1 {
+    color: #fff;
+}
+
+.dark-mode #para {
+    color: #ccc;
+}
+
+.dark-mode .input-grp input {
+    background: #2a2a2a;
+    color: #fff;
+    border-color: #444;
+}
+
+.dark-mode .input-grp label {
+    color: #ddd;
+}
+
+.dark-mode .toggle-password {
+    color: #bbb;
+}
+
+.dark-mode .btn-primary {
+    background: #45a049;
+}
+
+.dark-mode .divider span {
+    background: #1f1f1f;
+    color: #bbb;
+}
+
+.dark-mode .divider::before,
+.dark-mode .divider::after {
+    background: #555;
+}
+
+
+
+/* ======================================================     LOGIN STYLING     ======================================================      */
+
 * {
     margin: 0;
     padding: 0;
@@ -17,7 +159,6 @@ body {
     width: 100%;
 }
 
-/* ================= LEFT SECTION ================= */
 .left-section {
     flex: 1;
     background-color: #ffffff;
@@ -119,7 +260,7 @@ h1 {
 .btn-primary {
     width: 100%;
     padding: 15px;
-    background-color: #003b46;
+    background: #45a049;
     color: white;
     border: none;
     border-radius: 8px;
@@ -130,7 +271,7 @@ h1 {
 }
 
 .btn-primary:hover {
-    background-color: #002a33;
+    background: #45a049de;
 }
 
 .divider {
@@ -295,7 +436,20 @@ h1 {
 }
 
 
-/* SignUp Styling */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ======================================================     SIGNUP STYLING     ======================================================      */
 
 * {
     margin: 0;
@@ -372,7 +526,6 @@ h1 {
     background-color: #f8f9fa;
     border-radius: 8px;
     font-size: 14px;
-    /* outline: none; */
     transition: border-color 0.3s;
 }
 
@@ -402,7 +555,7 @@ h1 {
 
 
 .btn-signup {
-    background-color: #003b46;
+    background: #45a049;
     color: white;
     width: 100%;
     padding: 15px;
@@ -416,7 +569,7 @@ h1 {
 }
 
 .btn-signup:hover {
-    background-color: #002a33;
+    background: #45a049de;
 }
 
 
@@ -530,9 +683,200 @@ h1 {
     }
 }
 
-/* Swal Customization */
+
+
+
+
+
+
+
+
+
+/* ======================================================     SWAL STYLING     ======================================================      */
+
 
 .glass-alert {
     backdrop-filter: blur(12px);
     border-radius: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ======================================================     HOME STYLING     ======================================================      */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f4f4f9;
+      padding: 20px;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    /* Upload Button */
+    .upload-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: #4caf50;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+
+    .upload-btn:hover {
+      background: #45a049;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    /* Image Preview */
+    .img-preview {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .img-preview img {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 2px solid #ddd;
+    }
+
+    /* Edit/Delete Buttons */
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .actions button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .edit-btn {
+      background: #2196f3;
+      color: #fff;
+    }
+
+    .edit-btn:hover {
+      background: #1976d2;
+    }
+
+    .delete-btn {
+      background: #f44336;
+      color: #fff;
+    }
+
+    .delete-btn:hover {
+      background: #d32f2f;
+    }
+
+    @media (max-width: 500px) {
+      .actions {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    /* =====================  MODE TOGGLE ANIMATED  ===================== */
+
+.mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ffffff;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transition: 0.35s ease;
+    z-index: 2000;
+}
+
+.mode-toggle:hover {
+    transform: scale(1.08) rotate(3deg);
+}
+
+.mode-toggle i {
+    font-size: 20px;
+    color: #333;
+    transition: 0.4s ease;
+    transform-origin: center;
+}
+
+/* dark mode effects */
+body.dark-mode {
+    background: #1c1c1c;
+    color: #fff;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+.dark-mode .container {
+    background: #262626;
+    box-shadow: 0 10px 20px rgba(255,255,255,0.08);
+}
+
+.dark-mode h2 {
+    color: #fff;
+}
+
+.dark-mode .upload-btn {
+    background: #3fa647;
+}
+
+.dark-mode .img-preview img {
+    border-color: #555;
+}
+
+.dark-mode .mode-toggle {
+    background: #2d2d2d;
+}
+
+.dark-mode .mode-toggle i {
+    color: #fff;
 }
