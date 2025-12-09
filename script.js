@@ -1,16 +1,14 @@
 import supabase from "./config.js";
 
-//  pasword toggle button for both sign up and login page 
+/* =======================================     PASSWORD TOGGLE BUTTON FUNCTIONALITY     ======================================= */
 
 const passwordInput = document.getElementById("password");
 const toggleIcon = document.querySelector(".toggle-password");
 
 if (passwordInput && toggleIcon) {
   toggleIcon.addEventListener("click", () => {
-    // Check current type
     const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
     passwordInput.setAttribute("type", type);
-    // Icon Icon Change Logic
     if (type === "text") {
       toggleIcon.classList.remove("fa-eye-slash");
       toggleIcon.classList.add("fa-eye");
@@ -21,7 +19,18 @@ if (passwordInput && toggleIcon) {
   });
 }
 
-//    Sign up page functionality
+
+
+
+
+
+
+
+
+
+
+
+/* =============================================     SIGNUP PAGE FUNCTIONALITY     ============================================= */
 
 let sUName = document.getElementById("name");
 let sEmail = document.getElementById("email");
@@ -29,7 +38,6 @@ let sPass = document.getElementById("password");
 let sPhn = document.getElementById("ph-no.");
 let sBtn = document.querySelector(".btn-signup");
 
-//  SIGN UP FUNCTIONALITY
 async function signUp(e) {
   e.preventDefault();
 
@@ -113,20 +121,16 @@ async function signUp(e) {
       return;
     }
 
-    // --- STEP 2: Admin Table ('profiles') mein data bhejo ---
-    // (Ye Naya Code Hai Jo Zaroori Hai)
     const { error: dbError } = await supabase
-      .from('Users') // Table ka naam
+      .from('Users')
       .insert({
         username: sUName.value,
         email: sEmail.value,
         phone: sPhn.value
-        // Password save nahi kar rahy (Safe practice)
       });
 
     if (dbError) {
       console.log("Database Error:", dbError);
-      // Agar table mn error aye to bhi user ko batao, lkn account ban chuka hota ha usually
       Swal.fire({
         title: "Database Error!",
         text: dbError.message,
@@ -141,7 +145,7 @@ async function signUp(e) {
     } else {
       Swal.fire({
         title: "Signup successfully!",
-        text: "Welcome to Ticket Manager",
+        text: "Welcome to Image Gallery",
         icon: "success",
         draggable: true,
         background: "#f9fbfc",
@@ -185,7 +189,19 @@ async function signUp(e) {
 }
 sBtn && sBtn.addEventListener("click", signUp);
 
-// Login page functionality
+
+
+
+
+
+
+
+
+
+
+
+
+/* =============================================     LOGIN PAGE FUNCTIONALITY     ============================================= */
 
 let lEmail = document.getElementById("email");
 let lPass = document.getElementById("password");
@@ -370,7 +386,18 @@ async function login(e) {
 
 lBtn && lBtn.addEventListener("click", login);
 
-//Logout functionality
+
+
+
+
+
+
+
+
+
+
+
+/* =============================================     LOGOUT PAGE FUNCTIONALITY     ============================================= */
 
 let logoutBtn = document.getElementById("logout-btn")
 console.log(logoutBtn);
@@ -387,30 +414,125 @@ async function logout() {
         confirmButtonText: "Go to Login page",
         padding: "20px",
       }).then(() => {
-        location.href = "/Authentication/login.html";
+        location.href = "login.html";
       });
     }
   } catch (err) {
     console.log(err)
   }
 }
-logoutBtn && logoutBtn.addEventListener("click", logout)               
+logoutBtn && logoutBtn.addEventListener("click", logout)
 
-// MOOD CHANGER
 
-// MODE TOGGLE BUTTON
+
+
+
+
+
+
+
+
+
+
+/* =============================================     MOOD TOGGLE FUNCTIONALITY     ============================================= */
+
 const modeBtn = document.querySelector(".mode-toggle");
 const modeIcon = document.getElementById("modeIcon");
 
 modeBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
+  document.body.classList.toggle("dark-mode");
 
-    // icon change
-    if (document.body.classList.contains("dark-mode")) {
-        modeIcon.classList.remove("fa-moon");
-        modeIcon.classList.add("fa-sun");
-    } else {
-        modeIcon.classList.remove("fa-sun");
-        modeIcon.classList.add("fa-moon");
-    }
+  if (document.body.classList.contains("dark-mode")) {
+    modeIcon.classList.remove("fa-moon");
+    modeIcon.classList.add("fa-sun");
+  } else {
+    modeIcon.classList.remove("fa-sun");
+    modeIcon.classList.add("fa-moon");
+  }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+/* =============================================      HOME PAGE FUNCTIONALITY      ============================================= */
+
+/* 
+<div class="img-preview" id="imgPreview"> 
+  <img id="previewImg" src="" alt="Preview Image">
+  <div class="actions">
+    <button class="edit-btn">Edit</button>
+    <button class="delete-btn">Delete</button>
+  </div>
+</div>
+*/
+
+  let UploadFile = document.getElementById("fileUpload");
+  let UploadBtn = document.querySelector(".upload-btn");
+  let imgContainer = document.getElementById("imgPreview");
+
+  let PublicD;
+  let imgUrl;
+  let upImgUrl;
+
+async function uploadF(event) {
+
+  console.log("BUTTON IS CLICKED!!");
+
+    const fileName = UploadFile.files[0].name;
+    const file = UploadFile.files[0];
+    console.log(UploadFile.files[0]?.name);
+
+
+  // ------------------------    UPLOAD IMAGE IN STORAGE    ------------------------
+
+  const { data, error } = await supabase
+    .storage
+    .from("Images")
+    .upload(fileName, file);
+
+  // --------------------    GET PUBLIC URL IF DATA UPLOADED    --------------------
+
+  if (data) {
+    var FData = data.fullPath.split('/');
+    console.log(FData[1]);
+    PublicD = FData[1];
+    console.log(PublicD);
+
+    const { data: myData } = supabase.storage
+      .from("Images")
+      .getPublicUrl(PublicD);
+
+    console.log(myData.PublicD);
+
+    if (myData) {
+      imgUrl = myData.PublicD;
+      const { error } = await supabase
+        .from("userPics")
+        .insert({ image: imageUrl });
+    }
+
+    if (error) {
+      console.log(error);
+    } else {
+      alert("picture uplaoded suc");
+    }
+  } else {
+    console.log(error);
+  }
+
+}
+
+
+UploadBtn && UploadBtn.addEventListener("click", uploadF);
+
+
+
+
