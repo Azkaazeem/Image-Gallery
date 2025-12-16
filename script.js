@@ -30,6 +30,16 @@ if (passwordInput && toggleIcon) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 /* =============================================     SIGNUP PAGE FUNCTIONALITY     ============================================= */
 
 let sUName = document.getElementById("name");
@@ -188,6 +198,16 @@ async function signUp(e) {
   }
 }
 sBtn && sBtn.addEventListener("click", signUp);
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -397,6 +417,16 @@ lBtn && lBtn.addEventListener("click", login);
 
 
 
+
+
+
+
+
+
+
+
+
+
 /* =============================================     LOGOUT PAGE FUNCTIONALITY     ============================================= */
 
 let logoutBtn = document.getElementById("logout-btn")
@@ -422,6 +452,16 @@ async function logout() {
   }
 }
 logoutBtn && logoutBtn.addEventListener("click", logout)
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -462,77 +502,115 @@ modeBtn.addEventListener("click", () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
 /* =============================================      HOME PAGE FUNCTIONALITY      ============================================= */
 
-/* 
-<div class="img-preview" id="imgPreview"> 
-  <img id="previewImg" src="" alt="Preview Image">
-  <div class="actions">
-    <button class="edit-btn">Edit</button>
-    <button class="delete-btn">Delete</button>
-  </div>
-</div>
-*/
+let UploadFile = document.getElementById("fileUpload");
+let UploadBtn = document.querySelector(".upload-btn");
+let imgContainer = document.getElementById("imgPreview");
+let cards = document.getElementById('cardsContainer');
 
-  let UploadFile = document.getElementById("fileUpload");
-  let UploadBtn = document.querySelector(".upload-btn");
-  let imgContainer = document.getElementById("imgPreview");
+let filePath;
+let imgUrl;
+let upImgUrl;
 
-  let PublicD;
-  let imgUrl;
-  let upImgUrl;
 
 async function uploadF(event) {
-
   console.log("BUTTON IS CLICKED!!");
 
-    const fileName = UploadFile.files[0].name;
+  Swal.fire({
+    title: 'Uploading...',
+    text: 'Processing your File and saving to th e database.',
+    icon: 'info',
+    showConfirmButton: false,
+    allowOutsideClick: false,
+  });
+
+  try {
+    if (!UploadFile.files || UploadFile.files.length === 0) {
+      throw new Error("No file selected.");
+    }
+
     const file = UploadFile.files[0];
-    console.log(UploadFile.files[0]?.name);
+    const fileName = file.name;
+    const filePath = `${Date.now()}-${fileName.replace(/\s/g, '_')}`;
 
+    const { error: uploadError } = await supabase.storage
+      .from("Images")
+      .upload(filePath, file);
 
-  // ------------------------    UPLOAD IMAGE IN STORAGE    ------------------------
-
-  const { data, error } = await supabase
-    .storage
-    .from("Images")
-    .upload(fileName, file);
-
-  // --------------------    GET PUBLIC URL IF DATA UPLOADED    --------------------
-
-  if (data) {
-    var FData = data.fullPath.split('/');
-    console.log(FData[1]);
-    PublicD = FData[1];
-    console.log(PublicD);
+    if (uploadError) {
+      throw new Error(`Storage Upload Failed: ${uploadError.message}`);
+    }
 
     const { data: myData } = supabase.storage
       .from("Images")
-      .getPublicUrl(PublicD);
+      .getPublicUrl(filePath);
 
-    console.log(myData.PublicD);
-
-    if (myData) {
-      imgUrl = myData.PublicD;
-      const { error } = await supabase
-        .from("userPics")
-        .insert({ image: imageUrl });
+    if (!myData || !myData.publicUrl) {
+      throw new Error("Failed to retrieve public URL after upload.");
     }
 
-    if (error) {
-      console.log(error);
-    } else {
-      alert("picture uplaoded suc");
+    const imgUrl = myData.publicUrl;
+
+    const { error: dbError } = await supabase
+      .from("userImages")
+      .insert({
+        image_url: imgUrl,
+        image_name: fileName
+      });
+
+    if (dbError) {
+      throw new Error(`Database Error: ${dbError.message}. Did you set RLS?`);
     }
-  } else {
-    console.log(error);
+
+    Swal.close();
+    Swal.fire({
+      title: "Upload Successful!",
+      text: "Image uploaded and saved.",
+      icon: "success",
+      confirmButtonText: "OK",
+    })
+
+  } catch (err) {
+    Swal.close();
+    console.error("Upload Process Error:", err);
+    Swal.fire({
+      title: "Upload Failed!",
+      html: `An error occurred: <b>${err.message || "Unknown error"}</b>`,
+      icon: "error",
+      confirmButtonText: "Try Again",
+    });
   }
-
 }
-
 
 UploadBtn && UploadBtn.addEventListener("click", uploadF);
 
+// ------------------------    SHOW IMAGE FROM DATABASE    ------------------------
 
+// async function showImage() {
+//   cards.innerHTML = "";
 
+//   const { data, error } = await supabase
+//     .from('userImages')
+//     .select('*')
 
+//   if (data) {
+//     data.forEach(cards => {
+//       console.log(cards);
+
+//       cards.innerHTML += `< div class="img-preview" id = "imgPreview" > <img id="previewImg" src="${cards.image}" alt="Preview Image"><div class="actions"><button class="edit-btn onClick='startEdt(${cards.id},"${cards.image}")">Edit</button><button class="delete-btn">Delete</button></div></>`
+//     });
+//   }
+// }
+
+// showImage()
