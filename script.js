@@ -536,22 +536,60 @@ async function UploadFile() {
 
   // B: FETCH FILE
 
+// async function fetchGallery() {
+//     gallery.innerHTML = "";
+    
+//     const { data: { user } } = await supabase.auth.getUser();
+//     if (!user) return;
+
+//     const { data, error } = await supabase
+//         .from('userImages')
+//         .select('*')
+//         .eq('user_id', user.id); 
+
+//     if (data && data.length > 0) {
+//         data.forEach(item => {
+//             gallery.innerHTML += `
+//             <div class="img-card" style="display:inline-block; margin:10px; border:1px solid #ddd; padding:10px; border-radius:8px; background:#fff;">
+//                 <img src="${item.image_url}" alt="${item.image_url}" width="200" style="border-radius:4px; display:block;">
+//                 <div style="margin-top:10px; text-align:center;">
+//                     <button class="btn btn-info btn-sm" onclick="startEdit(${item.id}, '${item.image_url}')">Edit</button>
+//                     <button class="btn btn-danger btn-sm" onclick="deleteImage(${item.id}, '${item.image_url}')">Delete</button>
+//                 </div>
+//             </div>`;
+//         });
+//     } else {
+//         gallery.innerHTML = "<p>No File found in your gallery.</p>";
+//     }
+// }
+
 async function fetchGallery() {
+    const gallery = document.getElementById('cardsContainer');
+    
     gallery.innerHTML = "";
     
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    const { data: { user }, error: userErr } = await supabase.auth.getUser();
+    if (!user || userErr) {
+        console.log("User not logged in");
+        return;                                                    
+    }
 
     const { data, error } = await supabase
         .from('userImages')
         .select('*')
         .eq('user_id', user.id); 
 
+    if (error) {
+        console.error("Fetch error:", error.message);
+        gallery.innerHTML = `<p style="color:white;">Error loading gallery: ${error.message}</p>`;
+        return;
+    }
+
     if (data && data.length > 0) {
         data.forEach(item => {
             gallery.innerHTML += `
-            <div class="img-card" style="display:inline-block; margin:10px; border:1px solid #ddd; padding:10px; border-radius:8px; background:#fff;">
-                <img src="${item.image_url}" alt="${item.image_url}" width="200" style="border-radius:4px; display:block;">
+            <div class="img-card">
+                <img src="${item.image_url}" alt="${item.image_name || 'Gallery Image'}">
                 <div style="margin-top:10px; text-align:center;">
                     <button class="btn btn-info btn-sm" onclick="startEdit(${item.id}, '${item.image_url}')">Edit</button>
                     <button class="btn btn-danger btn-sm" onclick="deleteImage(${item.id}, '${item.image_url}')">Delete</button>
@@ -559,7 +597,7 @@ async function fetchGallery() {
             </div>`;
         });
     } else {
-        gallery.innerHTML = "<p>No File found in your gallery.</p>";
+        gallery.innerHTML = "<p style='color:white; text-align:center; grid-column: 1/-1;'>Your gallery is empty. Upload your first image!</p>";
     }
 }
 
@@ -570,7 +608,7 @@ if (uploadBtn) {
 window.onload = fetchGallery;
 
 
-  // C: EDIT & DELETE FILE
+  // C: DELETE FILE
 
 const editFileInput = document.getElementById('editFileInput');
 let currentEditId = null;
@@ -603,6 +641,9 @@ window.deleteImage = async (id, imageUrl) => {
         }
     }
 };
+
+
+// D: EDIT FILE
 
 window.startEdit = (id, url) => {
     currentEditId = id;
